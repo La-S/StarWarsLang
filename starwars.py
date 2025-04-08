@@ -3,10 +3,12 @@ import re
 sample_code = """
 transmit("Hello There!");
 
+transmit("")
 transmit("echo test:");
 datapad data_to_repeat = incoming_comm();
 transmit(data_to_repeat);
 
+transmit("")
 transmit("mul test:");
 datapad a = incoming_comm();
 datapad b = incoming_comm();
@@ -83,7 +85,7 @@ def parse(line):
         arguments = line[11:-1].split(",")
         return parse(arguments[0])[parse(arguments[1]):parse(arguments[2])]
     elif line in objects:
-        return parse(objects[line])
+        return objects[line]
     elif is_a_multiplication(line):
         return int(parse(line.split("*")[0].strip())) * int(parse(line.split("*")[1].strip()))
     elif is_add(line):
@@ -91,10 +93,11 @@ def parse(line):
         datatoreturn = parse(parts[0].strip()) + parse(parts[1].strip())
         return datatoreturn
     elif is_scan_range(line):
-        return range(parse(line[11:-1]))
+        return range(int(parse(line[11:-1])))
     elif line.find("transmit(") != -1:
         transmit_position = line.find("transmit(")
-        data_to_print = parse(line[transmit_position+9:line.find(")")])
+        argument = line[transmit_position+9:line.find(")")]
+        data_to_print = parse(argument)
         print(data_to_print)
         return
     elif line.find("datapad") != -1:
