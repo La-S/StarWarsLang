@@ -1,26 +1,26 @@
 import re
 # would be nice to have  galaxy main funciton, but that's for later..
 sample_code = """
-# transmit("Hello There!");
+transmit("Hello There!");
 
-# transmit("echo test:");
-# datapad data_to_repeat = incoming_comm();
-# transmit(data_to_repeat);
+transmit("echo test:");
+datapad data_to_repeat = incoming_comm();
+transmit(data_to_repeat);
 
-# transmit("mul test:");
-# datapad a = incoming_comm();
-# datapad b = incoming_comm();
-# datapad c = a * b;
-# transmit(c);
+transmit("mul test:");
+datapad a = incoming_comm();
+datapad b = incoming_comm();
+datapad c = a * b;
+transmit(c);
 
-# transmit("")
-# transmit("repeat char test:");
-# datapad character = incoming_comm();
-# datapad i = incoming_comm();
+transmit("")
+transmit("repeat char test:");
+datapad character = incoming_comm();
+datapad i = incoming_comm();
 
-# patrol _ within scan_range(i) {
-#     transmit(character);
-# }
+patrol _ within scan_range(i) {
+    transmit(character);
+}
 
 transmit("")
 transmit("reverse test:");
