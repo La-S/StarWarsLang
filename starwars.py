@@ -28,7 +28,8 @@ datapad word = incoming_comm();
 datapad len_word = readout(word);
 datapad reversed = "";
 patrol i within scan_range(len_word) {
-    reversed = lightsaber(word, i,i+1) + reversed; # last thing to implement
+    datapad j = i + 1;
+    datapad reversed = lightsaber(word, i, j) + reversed; # last thing to implement
 }
 transmit(reversed);
 """
@@ -40,6 +41,9 @@ def is_a_string(data):
 
 def is_a_number(data):
     return re.match(r'^\d+$', data)
+
+def is_add(data):
+    return re.match(r'[a-zA-Z() ,]*\s\+\s[a-zA-Z() ,]*', data) is not None
 
 def is_a_multiplication(data):
     result = re.match(r'^[a-zA-Z0-9]* \* [a-zA-Z0-9]*$', data)
@@ -53,6 +57,9 @@ def is_scan_range(data):
 
 def is_line_readout(data):
     return data.startswith("readout(")
+
+def is_line_lightsaber(data):
+    return re.match(r'^lightsaber\(.[^\)]*\)$', data) is not None
 
 split_lines = sample_code.split("\n")
 pc = 0
@@ -71,12 +78,18 @@ def parse(line):
     elif line == "incoming_comm()":
         return input(">")
     elif is_line_readout(line):
-        # print("lenlinereadout:", len(parse(line[9:-1])))
-        return len(parse(line[9:-1]))
+        return len(parse(line[8:-1]))
+    elif is_line_lightsaber(line):
+        arguments = line[11:-1].split(",")
+        return parse(arguments[0])[parse(arguments[1]):parse(arguments[2])]
     elif line in objects:
         return parse(objects[line])
     elif is_a_multiplication(line):
         return int(parse(line.split("*")[0].strip())) * int(parse(line.split("*")[1].strip()))
+    elif is_add(line):
+        parts = line.split("+")
+        datatoreturn = parse(parts[0].strip()) + parse(parts[1].strip())
+        return datatoreturn
     elif is_scan_range(line):
         return range(parse(line[11:-1]))
     elif line.find("transmit(") != -1:
@@ -105,7 +118,6 @@ def parse(line):
         range_var = patrol_parts[3]
         for i in parse(range_var):
             objects[loop_var] = i
-            print("i")
             for instruction in loop_instructions:
                 parse(instruction)
             
