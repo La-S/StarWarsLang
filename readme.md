@@ -4,6 +4,7 @@ A Star Wars themed programming language.
 
 ## Key Features
 traditional name | starwars name
+------- | -------
 var or let  | datapad
 main | galaxy
 print | transmit
