@@ -1,14 +1,19 @@
-# Star Wars Language
+# Star Wars Lang
 
 A Star Wars themed programming language.
 
 ## Key Features
 traditional name | starwars name
 ------- | -------
-var or let  | datapad
-main | galaxy
+var | datapad
 print | transmit
 input | incoming_comm
 for in | patrol within
 range | scan_range
 length | readout
+
+## Additional Options:
+- multiplication (*)
+- addition/string concat (+)
+
+Star Wars Lang files should end with the .star extension.
