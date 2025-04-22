@@ -1,40 +1,16 @@
 import re
-# would be nice to have  galaxy main funciton, but that's for later..
-sample_code = """
-transmit("Hello There!");
 
-transmit("")
-transmit("echo test:");
-datapad data_to_repeat = incoming_comm();
-transmit(data_to_repeat);
+# Options:
+# - echo.star
+# - multiply.star
+# - repeater.star
+# - reverse.star
+# - hello_world.star
+file = open("reverse.star", "r")
 
-transmit("")
-transmit("mul test:");
-datapad a = incoming_comm();
-datapad b = incoming_comm();
-datapad c = a * b;
-transmit(c);
+sample_code = file.read()
 
-transmit("")
-transmit("repeat char test:");
-datapad character = incoming_comm();
-datapad i = incoming_comm();
-
-patrol _ within scan_range(i) {
-    transmit(character);
-}
-
-transmit("")
-transmit("reverse test:");
-datapad word = incoming_comm();
-datapad len_word = readout(word);
-datapad reversed = "";
-patrol i within scan_range(len_word) {
-    datapad j = i + 1;
-    datapad reversed = lightsaber(word, i, j) + reversed; # last thing to implement
-}
-transmit(reversed);
-"""
+file.close()
 
 objects = {}
 
